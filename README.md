@@ -19,7 +19,6 @@ The server is defaulted to use port 8888 and you can access it at http://localho
 
 You can run the below query
 
-'''
 query {
   bookById(id:2) {
     id
@@ -33,7 +32,6 @@ query {
     age
   }
 }
-'''
 
 It has 2 queries.
 You can choose remove fields you dont need, and you would receive just what you ask.
