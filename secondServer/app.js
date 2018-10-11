@@ -4,6 +4,7 @@ const { introspectSchema, makeExecutableSchema, makeRemoteExecutableSchema, merg
 const { createHttpLink } = require('apollo-link-http')
 const fetch = require('node-fetch')
 const {typeDefs, resolvers} = require('./schema/schema');
+const { mergeTypes } = require('merge-graphql-schemas');
 
 const app = express();
 
@@ -23,11 +24,17 @@ async function run() {
         link: link()
         });
 
-    const localSchema = makeExecutableSchema ({typeDefs, resolvers}); 
+    const mergedTypes = mergeTypes([typeDefs]);
 
-    const mergeSchema = mergeSchemas({schemas: [remoteSchema, localSchema]});
+    const mergedSchema = mergeSchemas({
+        schemas: [remoteSchema, mergedTypes]});
 
-    const server = new ApolloServer({schema : mergeSchema});
+    const mergeSchemaWithResolver = mergeSchemas({
+        schemas: [mergedSchema],
+        resolvers
+    });
+
+    const server = new ApolloServer({schema : mergeSchemaWithResolver});
 
     server.applyMiddleware({app});
 

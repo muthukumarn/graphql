@@ -21,6 +21,9 @@ const typeDefs = gql`
     extend type Title {
         writer : Writer
     }
+    extend type Book {
+        writer : Writer
+    }
 `;
 const first = R.nth(0);
 function restrictTitles(parent, args) {
@@ -37,11 +40,18 @@ const resolvers = {
     },
     Title : {
         writer : {
-            fragment: `... on Title {writerId)`,
+            fragment: `... on Title {writerId}`,
             resolve (parent, args, context, info) {
                 return restrictWriters(parent.writerId);
             }
-
+        }
+    },
+    Book : {
+        writer : {
+            fragment: `... on Book {authorId}`,
+            resolve (parent, args, context, info) {
+                return restrictWriters(parent.authorId);
+            }
         }
     }
 };
