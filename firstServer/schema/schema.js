@@ -18,6 +18,9 @@ const typeDefs = gql`
         bookById(id: Int) : Book 
         authorById(id: Int): Author
     }
+    extend type Book {
+        author : Author
+    }
 `;
 const first = R.nth(0);
 function restrictBooks(parent, args) {
@@ -31,6 +34,15 @@ const resolvers = {
     Query: {
         bookById : (parent, args) => restrictBooks(parent, args),
         authorById : (parent, args) => restrictAuthors(args.id)
+    },
+    Book : {
+        author : {
+            fragment: `... on Book {authorId)`,
+            resolve (parent, args, context, info) {
+                return restrictAuthors(parent.authorId);
+            }
+
+        }
     }
 };
 
