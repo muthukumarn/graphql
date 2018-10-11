@@ -37,7 +37,7 @@ const resolvers = {
     },
     Title : {
         writer : {
-            fragment: `... on Title {writerId)`,
+            fragment: `... on Title (writerId)`,
             resolve (parent, args, context, info) {
                 return restrictWriters(parent.writerId);
             }
