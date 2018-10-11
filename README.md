@@ -1,13 +1,14 @@
 # GraphQL
-Running the first GraphQL Server
+Running the first GraphQL Server as priamry and second as remote on the first.
 
 # Explanation
 
-Book type is extended by adding the type Author.  The Author in Book type is also resolved as an extension (we also use fragment here).
+This works on the previous sample and adds a remote server.
 
 # To Start
-yarn start //this will start the first server which has the dsta and resolvers
-yarn start2 //start after the preivous command is running on another windwo and this starts a remover server
+yarn start --this will start the first server which has the dsta and resolvers
+
+yarn start2 --start after the preivous command is running on another windwo and this starts a remover server
 
 # Queries
 The first server is defaulted to use port 8888 and you can access it at http://localhost:8888/graphql
