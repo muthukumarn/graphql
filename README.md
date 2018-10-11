@@ -1,5 +1,5 @@
 # GraphQL
-Running the first GraphQL Server
+Running the first GraphQL Server and we introduce extending types.
 
 # Explanation
 
