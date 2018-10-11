@@ -1,5 +1,5 @@
 # GraphQL
-Running the first GraphQL Server as priamry and second as remote on the first.
+Running the first GraphQL Server as priamry and second as remote on the first.  Add types in second but we dont have dedpendencies between these the schema in first and second.
 
 # Explanation
 
