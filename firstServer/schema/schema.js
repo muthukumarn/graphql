@@ -37,7 +37,7 @@ const resolvers = {
     },
     Book : {
         author : {
-            fragment: `... on Book {authorId)`,
+            fragment: `... on Book {authorId}`,
             resolve (parent, args, context, info) {
                 return restrictAuthors(parent.authorId);
             }
