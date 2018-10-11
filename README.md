@@ -19,27 +19,35 @@ You can run the below query on both the nodes and you should see the same result
 ```
 query {
   bookById(id:2) {
-    id
     name
-    genre
-    authorId
     author {
-      id
       name
-      age
     }
   }
   authorById(id:2) {
     id
-    name
     age
+    name
+  }
+  titleById(id:2) {
+    name
+    writer {
+      name
+    }
+  }
+  writerById(id:2) {
+    id
+    age
+    name
   }
 }
 ```
-# package.json
-added additional node modules needed for the remote connection.  This requires to run yarn install (or equivalent npm)
+# secondserver/schema
+schema.js - defines a new setup of schemas.  The schema is similar to the schema in first except Book is called Titles, Authors is called Writers and authorId is called writerId
+
+Data.js - just the same as in firstServer except the authorId is called writerId
 
 # secondServer/app.js -
-This is only file modified compared to the preivous branch (other than package.json).
-Based on the remote URL a remote schema is generated and an executable schema from the same.
+In addition to retriving the remote schema, we make the excetuable schema based on its own schema.  The local and remote schemas are merged before passing to ApolloServer.
+
 
