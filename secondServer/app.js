@@ -1,8 +1,9 @@
 const express = require('express');
 const { ApolloServer, gql } = require('apollo-server-express');
-const { introspectSchema, makeRemoteExecutableSchema } = require('graphql-tools');
+const { introspectSchema, makeExecutableSchema, makeRemoteExecutableSchema, mergeSchemas } = require('graphql-tools');
 const { createHttpLink } = require('apollo-link-http')
 const fetch = require('node-fetch')
+const {typeDefs, resolvers} = require('./schema/schema');
 
 const app = express();
 
@@ -21,8 +22,12 @@ async function run() {
         schema: schema,
         link: link()
         });
-    
-    const server = new ApolloServer({schema : remoteSchema});
+
+    const localSchema = makeExecutableSchema ({typeDefs, resolvers}); 
+
+    const mergeSchema = mergeSchemas({schemas: [remoteSchema, localSchema]});
+
+    const server = new ApolloServer({schema : mergeSchema});
 
     server.applyMiddleware({app});
 
