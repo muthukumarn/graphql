@@ -1,5 +1,5 @@
 # GraphQL
-Running the first GraphQL Server as priamry and second as remote on the first.
+Running the first GraphQL Server as priamry and second as remote on the first.  Add types in second that extend the first.
 
 # Explanation
 
@@ -23,6 +23,9 @@ query {
     author {
       name
     }
+    writer {
+      name
+    }
   }
   authorById(id:2) {
     id
@@ -42,12 +45,15 @@ query {
   }
 }
 ```
-# secondserver/schema
-schema.js - defines a new setup of schemas.  The schema is similar to the schema in first except Book is called Titles, Authors is called Writers and authorId is called writerId
-
-Data.js - just the same as in firstServer except the authorId is called writerId
+# secondserver/schema/schema.js - extend the Book coming from first server and add the field writer
 
 # secondServer/app.js -
-In addition to retriving the remote schema, we make the excetuable schema based on its own schema.  The local and remote schemas are merged before passing to ApolloServer.
+We cannot make an executabble schema of the second server since it depends on types from another schema.  So first we exeucte mergeType on that.  Then we merge the remote schema and the mergeType.  We merge them again with the second server resolver.  Finally we make an executablbe schema with the merged schema.
+
+# package.json
+Added dependency to do mergeType
+
+# firstServer/schema/schema.js
+The fragment should take the reference id (which is AuthorID) in curly brackets. Fixed the typo.
 
 
